@@ -191,7 +191,7 @@ function App() {
 
     // "I completed my" text
     ctx.fillStyle = '#6B7280';
-    ctx.font = '500 38px Inter, system-ui, sans-serif';
+    ctx.font = '500 42px Inter, system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('I completed my', W / 2, 740);
 
@@ -200,27 +200,27 @@ function App() {
     titleGrad.addColorStop(0, '#EB0080');
     titleGrad.addColorStop(1, '#FF33A1');
     ctx.fillStyle = titleGrad;
-    ctx.font = '900 96px Inter, system-ui, sans-serif';
-    ctx.fillText('SADARI', W / 2, 850);
+    ctx.font = '900 110px Inter, system-ui, sans-serif';
+    ctx.fillText('SADARI', W / 2, 860);
 
     // Subtitle
     ctx.fillStyle = '#EB0080';
-    ctx.font = '600 32px Inter, system-ui, sans-serif';
-    ctx.fillText('Self-Breast Examination', W / 2, 910);
+    ctx.font = '600 36px Inter, system-ui, sans-serif';
+    ctx.fillText('Periksa Payudara Sendiri', W / 2, 930);
 
     // Divider line
     ctx.strokeStyle = 'rgba(235,0,128,0.2)';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(W / 2 - 180, 970);
-    ctx.lineTo(W / 2 + 180, 970);
+    ctx.moveTo(W / 2 - 200, 1000);
+    ctx.lineTo(W / 2 + 200, 1000);
     ctx.stroke();
 
     // Motivational quote
     ctx.fillStyle = '#374151';
-    ctx.font = 'italic 500 30px Inter, system-ui, sans-serif';
-    ctx.fillText('"Taking care of myself is', W / 2, 1040);
-    ctx.fillText('an act of self-love."', W / 2, 1080);
+    ctx.font = 'italic 500 34px Inter, system-ui, sans-serif';
+    ctx.fillText('"Taking care of myself is', W / 2, 1080);
+    ctx.fillText('an act of self-love."', W / 2, 1130);
 
     // Date
     const today = new Date();
@@ -230,42 +230,18 @@ function App() {
       day: 'numeric',
     });
     ctx.fillStyle = '#9CA3AF';
-    ctx.font = '500 30px Inter, system-ui, sans-serif';
-    ctx.fillText(dateStr, W / 2, 1180);
-
-    // Small pink dot separator
-    ctx.fillStyle = '#EB0080';
-    ctx.beginPath();
-    ctx.arc(W / 2, 1230, 5, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Check mark badge
-    ctx.fillStyle = '#EB0080';
-    ctx.beginPath();
-    ctx.arc(W / 2, 1310, 30, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 32px sans-serif';
-    ctx.fillText('✓', W / 2, 1313);
+    ctx.font = '500 34px Inter, system-ui, sans-serif';
+    ctx.fillText(dateStr, W / 2, 1260);
 
     // Hashtag
     ctx.fillStyle = '#EB0080';
-    ctx.font = '700 36px Inter, system-ui, sans-serif';
+    ctx.font = '700 40px Inter, system-ui, sans-serif';
     ctx.fillText('#BreastCancerAwareness', W / 2, 1600);
 
     // Instagram handle
     ctx.fillStyle = '#9CA3AF';
-    ctx.font = '500 28px Inter, system-ui, sans-serif';
+    ctx.font = '500 32px Inter, system-ui, sans-serif';
     ctx.fillText('@girlupunsoed.id', W / 2, 1660);
-
-    // Bottom branding line
-    ctx.fillStyle = 'rgba(235,0,128,0.12)';
-    ctx.beginPath();
-    ctx.roundRect(W / 2 - 140, 1740, 280, 50, 25);
-    ctx.fill();
-    ctx.fillStyle = '#EB0080';
-    ctx.font = '700 24px Inter, system-ui, sans-serif';
-    ctx.fillText('sadari.app', W / 2, 1768);
 
     // Convert to blob and share/download
     canvas.toBlob(async (blob) => {

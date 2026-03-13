@@ -126,55 +126,50 @@ function App() {
   // Generate sticker image and share/download
   const generateAndShareSticker = async () => {
     const canvas = document.createElement('canvas');
-    const W = 1080;
-    const H = 1920;
+    const W = 800;
+    const H = 900;
     canvas.width = W;
     canvas.height = H;
     const ctx = canvas.getContext('2d')!;
 
-    // Background gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-    bgGrad.addColorStop(0, '#FFF0F7');
-    bgGrad.addColorStop(0.5, '#FFE0EF');
-    bgGrad.addColorStop(1, '#FFD0E8');
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, W, H);
+    // Transparent background (sticker-style)
+    ctx.clearRect(0, 0, W, H);
 
-    // Decorative circles
-    ctx.globalAlpha = 0.08;
-    ctx.fillStyle = '#EB0080';
+    // Card background with rounded corners
+    const pad = 20;
+    const cardR = 40;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
     ctx.beginPath();
-    ctx.arc(150, 400, 250, 0, Math.PI * 2);
+    ctx.roundRect(pad, pad, W - pad * 2, H - pad * 2, cardR);
     ctx.fill();
-    ctx.beginPath();
-    ctx.arc(900, 1500, 300, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(950, 350, 180, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
 
-    // Center card background
-    const cardX = 80;
-    const cardY = 480;
-    const cardW = W - 160;
-    const cardH = 960;
-    const cardR = 60;
-    ctx.fillStyle = 'rgba(255,255,255,0.85)';
-    ctx.beginPath();
-    ctx.roundRect(cardX, cardY, cardW, cardH, cardR);
-    ctx.fill();
-    // Card border
-    ctx.strokeStyle = 'rgba(235,0,128,0.15)';
+    // Subtle pink border
+    ctx.strokeStyle = 'rgba(235, 0, 128, 0.18)';
     ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.roundRect(cardX, cardY, cardW, cardH, cardR);
+    ctx.roundRect(pad, pad, W - pad * 2, H - pad * 2, cardR);
     ctx.stroke();
 
-    // Heart icon (drawn as circle with gradient)
+    // Decorative pink circle (top-right)
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(pad, pad, W - pad * 2, H - pad * 2, cardR);
+    ctx.clip();
+    ctx.globalAlpha = 0.06;
+    ctx.fillStyle = '#EB0080';
+    ctx.beginPath();
+    ctx.arc(W - 60, 60, 160, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(60, H - 80, 120, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.restore();
+
+    // Heart icon circle
     const heartCx = W / 2;
-    const heartCy = 620;
-    const heartR = 60;
+    const heartCy = 110;
+    const heartR = 40;
     const heartGrad = ctx.createRadialGradient(heartCx, heartCy, 0, heartCx, heartCy, heartR);
     heartGrad.addColorStop(0, '#FF33A1');
     heartGrad.addColorStop(1, '#EB0080');
@@ -184,43 +179,42 @@ function App() {
     ctx.fill();
     // Heart symbol
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 60px serif';
+    ctx.font = 'bold 40px serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('♥', heartCx, heartCy + 3);
+    ctx.fillText('♥', heartCx, heartCy + 2);
 
     // "I completed my" text
     ctx.fillStyle = '#6B7280';
-    ctx.font = '500 42px Inter, system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('I completed my', W / 2, 740);
+    ctx.font = '500 28px Inter, system-ui, sans-serif';
+    ctx.fillText('I completed my', W / 2, 195);
 
     // SADARI title
-    const titleGrad = ctx.createLinearGradient(W / 2 - 200, 0, W / 2 + 200, 0);
+    const titleGrad = ctx.createLinearGradient(W / 2 - 160, 0, W / 2 + 160, 0);
     titleGrad.addColorStop(0, '#EB0080');
     titleGrad.addColorStop(1, '#FF33A1');
     ctx.fillStyle = titleGrad;
-    ctx.font = '900 110px Inter, system-ui, sans-serif';
-    ctx.fillText('SADARI', W / 2, 860);
+    ctx.font = '900 80px Inter, system-ui, sans-serif';
+    ctx.fillText('SADARI', W / 2, 285);
 
     // Subtitle
     ctx.fillStyle = '#EB0080';
-    ctx.font = '600 36px Inter, system-ui, sans-serif';
-    ctx.fillText('Periksa Payudara Sendiri', W / 2, 930);
+    ctx.font = '600 24px Inter, system-ui, sans-serif';
+    ctx.fillText('Periksa Payudara Sendiri', W / 2, 335);
 
-    // Divider line
-    ctx.strokeStyle = 'rgba(235,0,128,0.2)';
+    // Divider
+    ctx.strokeStyle = 'rgba(235, 0, 128, 0.15)';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(W / 2 - 200, 1000);
-    ctx.lineTo(W / 2 + 200, 1000);
+    ctx.moveTo(W / 2 - 140, 380);
+    ctx.lineTo(W / 2 + 140, 380);
     ctx.stroke();
 
     // Motivational quote
     ctx.fillStyle = '#374151';
-    ctx.font = 'italic 500 34px Inter, system-ui, sans-serif';
-    ctx.fillText('"Taking care of myself is', W / 2, 1080);
-    ctx.fillText('an act of self-love."', W / 2, 1130);
+    ctx.font = 'italic 500 22px Inter, system-ui, sans-serif';
+    ctx.fillText('"Taking care of myself is', W / 2, 430);
+    ctx.fillText('an act of self-love."', W / 2, 462);
 
     // Date
     const today = new Date();
@@ -230,18 +224,35 @@ function App() {
       day: 'numeric',
     });
     ctx.fillStyle = '#9CA3AF';
-    ctx.font = '500 34px Inter, system-ui, sans-serif';
-    ctx.fillText(dateStr, W / 2, 1260);
+    ctx.font = '500 22px Inter, system-ui, sans-serif';
+    ctx.fillText(dateStr, W / 2, 530);
+
+    // Divider 2
+    ctx.strokeStyle = 'rgba(235, 0, 128, 0.15)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 140, 575);
+    ctx.lineTo(W / 2 + 140, 575);
+    ctx.stroke();
 
     // Hashtag
     ctx.fillStyle = '#EB0080';
-    ctx.font = '700 40px Inter, system-ui, sans-serif';
-    ctx.fillText('#BreastCancerAwareness', W / 2, 1600);
+    ctx.font = '700 26px Inter, system-ui, sans-serif';
+    ctx.fillText('#BreastCancerAwareness', W / 2, 630);
 
     // Instagram handle
     ctx.fillStyle = '#9CA3AF';
-    ctx.font = '500 32px Inter, system-ui, sans-serif';
-    ctx.fillText('@girlupunsoed.id', W / 2, 1660);
+    ctx.font = '500 20px Inter, system-ui, sans-serif';
+    ctx.fillText('@girlupunsoed.id', W / 2, 670);
+
+    // Small pink ribbon badge at bottom
+    ctx.fillStyle = 'rgba(235, 0, 128, 0.08)';
+    ctx.beginPath();
+    ctx.roundRect(W / 2 - 100, 730, 200, 44, 22);
+    ctx.fill();
+    ctx.fillStyle = '#EB0080';
+    ctx.font = '700 18px Inter, system-ui, sans-serif';
+    ctx.fillText('🎀 Spread Awareness', W / 2, 755);
 
     // Convert to blob and share/download
     canvas.toBlob(async (blob) => {

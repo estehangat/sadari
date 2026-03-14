@@ -318,11 +318,11 @@ function App() {
         href="https://instagram.com/girlupunsoed.id"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed top-6 right-6 sm:top-8 sm:right-8 z-50 flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-white border-2 border-gray-200 text-gray-600 hover:text-primary hover:border-primary border-opacity-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-1 focus:ring-4 focus:ring-gray-200 group"
+        className="fixed top-4 right-4 sm:top-8 sm:right-8 z-[60] flex items-center justify-center gap-2 p-2.5 sm:px-6 sm:py-3 rounded-full bg-white border-2 border-gray-200 text-gray-600 hover:text-primary hover:border-primary border-opacity-50 transition-all shadow-md hover:shadow-lg hover:-translate-y-1 focus:ring-4 focus:ring-gray-200 group"
         aria-label="Follow us on Instagram"
       >
         <Instagram className="w-5 h-5 sm:w-6 sm:h-6 group-hover:scale-110 transition-transform duration-300" />
-        <span className="text-sm sm:text-base font-bold tracking-wide">girlupunsoed.id</span>
+        <span className="hidden sm:inline text-base font-bold tracking-wide">girlupunsoed.id</span>
       </a>
 
       {/* Main Content Area */}
@@ -356,26 +356,26 @@ function App() {
 
           {/* STEP 1: FACTS SECTION */}
           {step === 1 && (
-            <div key={`step-1-${animKey}`} className="absolute inset-x-0 mx-auto w-full flex flex-col justify-center animate-slide-in-right">
-              <div className="text-center mb-8 sm:mb-12">
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 tracking-tight">Why It Matters</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-xl font-medium">Understanding the reality of breast cancer is the first step toward proactive care.</p>
+            <div key={`step-1-${animKey}`} className="absolute inset-x-0 mx-auto w-full flex flex-col justify-center animate-slide-in-right px-2 sm:px-0 mt-8 sm:mt-0">
+              <div className="text-center mb-6 sm:mb-12">
+                <h2 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-2 sm:mb-4 tracking-tight">Why It Matters</h2>
+                <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-xl font-medium">Understanding the reality of breast cancer is the first step toward proactive care.</p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto w-full">
-                <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 max-w-4xl mx-auto w-full">
+                <div className="glass p-4 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
                   <div className="p-3 sm:p-4 bg-rose-100 text-primary rounded-xl sm:rounded-2xl shrink-0">
-                    <Activity className="w-6 h-6 sm:w-7 sm:h-7" />
+                    <Activity className="w-5 h-5 sm:w-7 sm:h-7" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Most Common</h3>
-                    <p className="text-gray-600 leading-relaxed">Breast cancer is the most commonly diagnosed cancer among women worldwide.</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Most Common</h3>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">Breast cancer is the most commonly diagnosed cancer among women worldwide.</p>
                   </div>
                 </div>
 
-                <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
+                <div className="glass p-4 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
                   <div className="p-3 sm:p-4 bg-pink-100 text-primary rounded-xl sm:rounded-2xl shrink-0">
-                    <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7" />
+                    <CheckCircle2 className="w-5 h-5 sm:w-7 sm:h-7" />
                   </div>
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">High Survival Rate</h3>
@@ -383,23 +383,23 @@ function App() {
                   </div>
                 </div>
 
-                <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
+                <div className="glass p-4 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
                   <div className="p-3 sm:p-4 bg-red-100 text-primary rounded-xl sm:rounded-2xl shrink-0">
-                    <Info className="w-6 h-6 sm:w-7 sm:h-7" />
+                    <Info className="w-5 h-5 sm:w-7 sm:h-7" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Not Just Genetics</h3>
-                    <p className="text-gray-600 leading-relaxed">Only about 5% to 10% of breast cancers are believed to be hereditary.</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Not Just Genetics</h3>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">Only about 5% to 10% of breast cancers are believed to be hereditary.</p>
                   </div>
                 </div>
 
-                <div className="glass p-6 sm:p-8 rounded-3xl flex items-start gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
-                  <div className="p-4 bg-fuchsia-100 text-primary rounded-2xl shrink-0">
-                    <Shield className="w-7 h-7" />
+                <div className="glass p-4 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
+                  <div className="p-3 sm:p-4 bg-fuchsia-100 text-primary rounded-xl sm:rounded-2xl shrink-0">
+                    <Shield className="w-5 h-5 sm:w-7 sm:h-7" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">Prevention is Key</h3>
-                    <p className="text-gray-600 leading-relaxed">Regular self-exams and professional screenings are your best defense.</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Prevention is Key</h3>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">Regular self-exams and professional screenings are your best defense.</p>
                   </div>
                 </div>
               </div>

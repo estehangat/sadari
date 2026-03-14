@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Heart, Activity, Shield, ArrowRight, ArrowLeft, Info, CheckCircle2, Instagram, Play, Pause, RotateCcw, Eye, MoveUp, Search, BedDouble, ShowerHead, AlertTriangle, CircleCheck, RotateCw, Share2 } from 'lucide-react';
+import QRCode from 'qrcode';
 
 function App() {
   const [step, setStep] = useState(0);
@@ -156,9 +157,9 @@ function App() {
 
     // Center card background
     const cardX = 80;
-    const cardY = 480;
+    const cardY = 185;
     const cardW = W - 160;
-    const cardH = 960;
+    const cardH = 920;
     const cardR = 60;
     ctx.fillStyle = 'rgba(255,255,255,0.85)';
     ctx.beginPath();
@@ -173,8 +174,8 @@ function App() {
 
     // Heart icon (drawn as circle with gradient)
     const heartCx = W / 2;
-    const heartCy = 620;
-    const heartR = 60;
+    const heartCy = 345;
+    const heartR = 70;
     const heartGrad = ctx.createRadialGradient(heartCx, heartCy, 0, heartCx, heartCy, heartR);
     heartGrad.addColorStop(0, '#FF33A1');
     heartGrad.addColorStop(1, '#EB0080');
@@ -184,43 +185,43 @@ function App() {
     ctx.fill();
     // Heart symbol
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 60px serif';
+    ctx.font = 'bold 70px serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('♥', heartCx, heartCy + 3);
+    ctx.fillText('\u2665', heartCx, heartCy + 4);
 
     // "I completed my" text
     ctx.fillStyle = '#6B7280';
-    ctx.font = '500 42px Inter, system-ui, sans-serif';
+    ctx.font = '500 48px Inter, system-ui, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('I completed my', W / 2, 740);
+    ctx.fillText('I completed my', W / 2, 495);
 
     // SADARI title
     const titleGrad = ctx.createLinearGradient(W / 2 - 200, 0, W / 2 + 200, 0);
     titleGrad.addColorStop(0, '#EB0080');
     titleGrad.addColorStop(1, '#FF33A1');
     ctx.fillStyle = titleGrad;
-    ctx.font = '900 110px Inter, system-ui, sans-serif';
-    ctx.fillText('SADARI', W / 2, 860);
+    ctx.font = '900 130px Inter, system-ui, sans-serif';
+    ctx.fillText('SADARI', W / 2, 625);
 
     // Subtitle
     ctx.fillStyle = '#EB0080';
-    ctx.font = '600 36px Inter, system-ui, sans-serif';
-    ctx.fillText('Periksa Payudara Sendiri', W / 2, 930);
+    ctx.font = '600 44px Inter, system-ui, sans-serif';
+    ctx.fillText('Periksa Payudara Sendiri', W / 2, 705);
 
     // Divider line
     ctx.strokeStyle = 'rgba(235,0,128,0.2)';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(W / 2 - 200, 1000);
-    ctx.lineTo(W / 2 + 200, 1000);
+    ctx.moveTo(W / 2 - 240, 785);
+    ctx.lineTo(W / 2 + 240, 785);
     ctx.stroke();
 
     // Motivational quote
     ctx.fillStyle = '#374151';
-    ctx.font = 'italic 500 34px Inter, system-ui, sans-serif';
-    ctx.fillText('"Taking care of myself is', W / 2, 1080);
-    ctx.fillText('an act of self-love."', W / 2, 1130);
+    ctx.font = 'italic 500 40px Inter, system-ui, sans-serif';
+    ctx.fillText('"Taking care of myself is', W / 2, 865);
+    ctx.fillText('an act of self-love."', W / 2, 925);
 
     // Date
     const today = new Date();
@@ -230,18 +231,42 @@ function App() {
       day: 'numeric',
     });
     ctx.fillStyle = '#9CA3AF';
-    ctx.font = '500 34px Inter, system-ui, sans-serif';
-    ctx.fillText(dateStr, W / 2, 1260);
+    ctx.font = '500 40px Inter, system-ui, sans-serif';
+    ctx.fillText(dateStr, W / 2, 1045);
+
+    // Generate QR code to a temporary canvas
+    const qrSize = 300;
+    const qrCanvas = document.createElement('canvas');
+    await QRCode.toCanvas(qrCanvas, 'https://sadarigirlup.vercel.app', {
+      width: qrSize,
+      margin: 1,
+      color: { dark: '#EB0080', light: '#FFFFFF00' },
+    });
+
+    // Draw QR with white background circle
+    const qrCx = W / 2;
+    const qrCy = 1370;
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.beginPath();
+    ctx.roundRect(qrCx - qrSize / 2 - 25, qrCy - qrSize / 2 - 25, qrSize + 50, qrSize + 50, 30);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(235,0,128,0.15)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(qrCx - qrSize / 2 - 25, qrCy - qrSize / 2 - 25, qrSize + 50, qrSize + 50, 30);
+    ctx.stroke();
+    // Draw QR Code
+    ctx.drawImage(qrCanvas, qrCx - qrSize / 2, qrCy - qrSize / 2, qrSize, qrSize);
 
     // Hashtag
     ctx.fillStyle = '#EB0080';
-    ctx.font = '700 40px Inter, system-ui, sans-serif';
-    ctx.fillText('#BreastCancerAwareness', W / 2, 1600);
+    ctx.font = '800 52px Inter, system-ui, sans-serif';
+    ctx.fillText('#BreastCancerAwareness', W / 2, 1660);
 
     // Instagram handle
-    ctx.fillStyle = '#9CA3AF';
-    ctx.font = '500 32px Inter, system-ui, sans-serif';
-    ctx.fillText('@girlupunsoed.id', W / 2, 1660);
+    ctx.fillStyle = '#6B7280';
+    ctx.font = '600 44px Inter, system-ui, sans-serif';
+    ctx.fillText('@girlupunsoed.id', W / 2, 1720);
 
     // Convert to blob and share/download
     canvas.toBlob(async (blob) => {
@@ -301,7 +326,7 @@ function App() {
       </a>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col justify-center relative z-10 w-full max-w-5xl mx-auto px-6 py-20 pb-32">
+      <main className="flex-1 flex flex-col justify-center relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-20 pb-28 sm:pb-32">
         <div className="w-full relative min-h-[500px] flex items-center justify-center">
 
           {/* STEP 0: HERO SECTION */}
@@ -310,21 +335,21 @@ function App() {
               <div className="inline-flex items-center justify-center p-4 bg-primary/10 rounded-full mb-8 shadow-inner">
                 <Heart className="w-14 h-14 text-primary" strokeWidth={2.5} />
               </div>
-              <h1 className="text-5xl sm:text-7xl font-extrabold text-gray-900 tracking-tight mb-4">
+              <h1 className="text-4xl sm:text-7xl font-extrabold text-gray-900 tracking-tight mb-3 sm:mb-4">
                 SADARI
               </h1>
-              <p className="text-xl sm:text-2xl text-primary font-semibold mb-6 tracking-wide uppercase">
+              <p className="text-lg sm:text-2xl text-primary font-semibold mb-4 sm:mb-6 tracking-wide uppercase">
                 Periksa Payudara Sendiri
               </p>
-              <p className="max-w-2xl text-lg sm:text-xl text-gray-600 mb-10 leading-relaxed font-medium">
+              <p className="max-w-2xl text-base sm:text-xl text-gray-600 mb-8 sm:mb-10 leading-relaxed font-medium">
                 Early detection saves lives. Empower yourself with knowledge and take control of your health. Breast cancer is highly treatable when caught early.
               </p>
               <button
                 onClick={handleNext}
-                className="group relative inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white transition-all duration-300 bg-primary rounded-full hover:bg-primary-dark hover:-translate-y-1 shadow-xl hover:shadow-primary/40 focus:ring-4 focus:ring-primary/30"
+                className="group relative inline-flex items-center justify-center px-8 py-3 sm:px-10 sm:py-4 text-base sm:text-lg font-bold text-white transition-all duration-300 bg-primary rounded-full hover:bg-primary-dark hover:-translate-y-1 shadow-xl hover:shadow-primary/40 focus:ring-4 focus:ring-primary/30"
               >
                 Start Journey
-                <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           )}
@@ -332,15 +357,15 @@ function App() {
           {/* STEP 1: FACTS SECTION */}
           {step === 1 && (
             <div key={`step-1-${animKey}`} className="absolute inset-x-0 mx-auto w-full flex flex-col justify-center animate-slide-in-right">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">Why It Matters</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto text-lg sm:text-xl font-medium">Understanding the reality of breast cancer is the first step toward proactive care.</p>
+              <div className="text-center mb-8 sm:mb-12">
+                <h2 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 tracking-tight">Why It Matters</h2>
+                <p className="text-gray-600 max-w-2xl mx-auto text-base sm:text-xl font-medium">Understanding the reality of breast cancer is the first step toward proactive care.</p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto w-full">
-                <div className="glass p-6 sm:p-8 rounded-3xl flex items-start gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
-                  <div className="p-4 bg-rose-100 text-primary rounded-2xl shrink-0">
-                    <Activity className="w-7 h-7" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto w-full">
+                <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
+                  <div className="p-3 sm:p-4 bg-rose-100 text-primary rounded-xl sm:rounded-2xl shrink-0">
+                    <Activity className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Most Common</h3>
@@ -348,19 +373,19 @@ function App() {
                   </div>
                 </div>
 
-                <div className="glass p-6 sm:p-8 rounded-3xl flex items-start gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
-                  <div className="p-4 bg-pink-100 text-primary rounded-2xl shrink-0">
-                    <CheckCircle2 className="w-7 h-7" />
+                <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
+                  <div className="p-3 sm:p-4 bg-pink-100 text-primary rounded-xl sm:rounded-2xl shrink-0">
+                    <CheckCircle2 className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">High Survival Rate</h3>
-                    <p className="text-gray-600 leading-relaxed">When detected early in the localized stage, the 5-year relative survival rate is 99%.</p>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">High Survival Rate</h3>
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">When detected early in the localized stage, the 5-year relative survival rate is 99%.</p>
                   </div>
                 </div>
 
-                <div className="glass p-6 sm:p-8 rounded-3xl flex items-start gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
-                  <div className="p-4 bg-red-100 text-primary rounded-2xl shrink-0">
-                    <Info className="w-7 h-7" />
+                <div className="glass p-5 sm:p-8 rounded-2xl sm:rounded-3xl flex items-start gap-4 sm:gap-5 transition-all hover:scale-[1.02] hover:shadow-primary/10">
+                  <div className="p-3 sm:p-4 bg-red-100 text-primary rounded-xl sm:rounded-2xl shrink-0">
+                    <Info className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Not Just Genetics</h3>
@@ -384,29 +409,29 @@ function App() {
           {/* STEP 2: AWARENESS SECTION */}
           {step === 2 && (
             <div key={`step-2-${animKey}`} className="absolute inset-x-0 mx-auto w-full flex flex-col justify-center items-center text-center animate-slide-in-right">
-              <div className="max-w-4xl glass p-10 sm:p-14 rounded-[2.5rem] relative overflow-hidden w-full shadow-2xl shadow-primary/10">
-                <div className="absolute -right-20 -top-20 text-primary/[0.03] pointer-events-none">
-                  <Heart className="w-80 h-80" fill="currentColor" />
+              <div className="max-w-4xl glass p-6 sm:p-14 rounded-3xl sm:rounded-[2.5rem] relative overflow-hidden w-full shadow-2xl shadow-primary/10">
+                <div className="absolute -right-16 -top-16 sm:-right-20 sm:-top-20 text-primary/[0.03] pointer-events-none">
+                  <Heart className="w-64 h-64 sm:w-80 sm:h-80" fill="currentColor" />
                 </div>
 
-                <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-8 relative z-10 tracking-tight">Listen To Your Body</h2>
+                <h2 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-5 sm:mb-8 relative z-10 tracking-tight">Listen To Your Body</h2>
 
-                <div className="space-y-6 text-xl text-gray-700 relative z-10 mb-8 max-w-2xl mx-auto leading-relaxed">
+                <div className="space-y-4 sm:space-y-6 text-base sm:text-xl text-gray-700 relative z-10 mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
                   <p className="font-medium text-center">
                     Being proactive isn't about fear; it's about <strong className="text-primary font-bold">empowerment and self-love.</strong>
                   </p>
 
-                  <div className="bg-primary/5 border-l-4 border-primary p-6 sm:p-8 rounded-2xl text-left my-6 shadow-sm">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center gap-2">
-                      <Heart className="w-6 h-6 text-primary" fill="currentColor" />
+                  <div className="bg-primary/5 border-l-4 border-primary p-5 sm:p-8 rounded-xl sm:rounded-2xl text-left my-5 sm:my-6 shadow-sm">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3 flex items-center gap-2">
+                      <Heart className="w-5 h-5 sm:w-6 sm:h-6 text-primary" fill="currentColor" />
                       When to check?
                     </h3>
-                    <p className="text-lg text-gray-700 leading-relaxed">
+                    <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
                       Perform your self-exam <strong className="text-gray-900">once a month</strong>, ideally <strong className="text-primary">7 to 10 days after your period starts</strong>. This is when your breasts are least likely to be swollen or tender.
                     </p>
                   </div>
 
-                  <p className="text-lg text-center">
+                  <p className="text-base sm:text-lg text-center">
                     Take just 5 minutes to feel confident about your body. Notice what's normal for you, so you can easily spot if something changes.
                   </p>
                 </div>
@@ -430,9 +455,9 @@ function App() {
                     <div
                       key={index}
                       className={`w-full transition-all duration-500 ease-out ${index === cardStep
-                          ? 'opacity-100 translate-x-0 relative'
-                          : 'opacity-0 absolute inset-0 pointer-events-none ' +
-                          (index > cardStep ? 'translate-x-16' : '-translate-x-16')
+                        ? 'opacity-100 translate-x-0 relative'
+                        : 'opacity-0 absolute inset-0 pointer-events-none ' +
+                        (index > cardStep ? 'translate-x-16' : '-translate-x-16')
                         }`}
                     >
                       <div className="glass rounded-[2rem] p-8 sm:p-12 shadow-2xl shadow-primary/10 border border-white/50">
@@ -463,10 +488,10 @@ function App() {
                     key={index}
                     onClick={() => setCardStep(index)}
                     className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${index === cardStep
-                        ? 'w-10 bg-primary'
-                        : index < cardStep
-                          ? 'w-6 bg-primary/40'
-                          : 'w-6 bg-gray-300'
+                      ? 'w-10 bg-primary'
+                      : index < cardStep
+                        ? 'w-6 bg-primary/40'
+                        : 'w-6 bg-gray-300'
                       }`}
                     aria-label={`Go to step ${index + 1}`}
                   />
@@ -485,8 +510,8 @@ function App() {
                 <button
                   onClick={toggleAutoPlay}
                   className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all shadow-md hover:shadow-lg focus:ring-4 ${isAutoPlay
-                      ? 'bg-primary border-primary text-white hover:bg-primary-dark focus:ring-primary/30'
-                      : 'bg-white border-gray-200 text-gray-600 hover:text-primary hover:border-primary focus:ring-gray-200'
+                    ? 'bg-primary border-primary text-white hover:bg-primary-dark focus:ring-primary/30'
+                    : 'bg-white border-gray-200 text-gray-600 hover:text-primary hover:border-primary focus:ring-gray-200'
                     }`}
                   aria-label={isAutoPlay ? 'Pause auto-play' : 'Start auto-play'}
                 >
@@ -513,45 +538,42 @@ function App() {
           {/* STEP 4: SYMPTOM QUESTIONS */}
           {step === 4 && (
             <div key={`step-4-${animKey}`} className="absolute inset-x-0 mx-auto w-full flex flex-col justify-center items-center animate-slide-in-right">
-              <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-2 tracking-tight text-center">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1 tracking-tight text-center">
                 Symptom Checklist
               </h2>
-              <p className="text-gray-500 text-lg mb-6 text-center font-medium max-w-xl">
+              <p className="text-gray-500 text-base mb-4 text-center font-medium max-w-xl">
                 Select any symptoms you have noticed recently.
               </p>
 
               {/* Disclaimer */}
-              <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 mb-8 max-w-2xl w-full shadow-sm">
-                <AlertTriangle className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
-                <p className="text-sm sm:text-base text-amber-800 leading-relaxed">
+              <div className="flex items-start gap-2.5 bg-amber-50 border border-amber-200 rounded-xl p-3 sm:p-4 mb-5 max-w-2xl w-full shadow-sm">
+                <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+                <p className="text-xs sm:text-sm text-amber-800 leading-relaxed">
                   <strong>Disclaimer:</strong> This is only a self-awareness tool, <strong>not a medical diagnosis</strong>. Always consult a healthcare professional for proper evaluation.
                 </p>
               </div>
 
               {/* Questions */}
-              <div className="w-full max-w-2xl space-y-3">
+              <div className="w-full max-w-2xl space-y-2">
                 {symptomQuestions.map((question, index) => (
                   <button
                     key={index}
                     onClick={() => toggleSymptom(index)}
-                    className={`w-full flex items-start gap-4 p-5 rounded-2xl border-2 text-left transition-all duration-300 ${
-                      selectedSymptoms.has(index)
+                    className={`w-full flex items-start gap-3 px-4 py-3 rounded-xl border-2 text-left transition-all duration-300 ${selectedSymptoms.has(index)
                         ? 'border-primary bg-primary/5 shadow-md shadow-primary/10'
                         : 'border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm'
-                    }`}
+                      }`}
                   >
-                    <div className={`w-6 h-6 rounded-lg border-2 shrink-0 mt-0.5 flex items-center justify-center transition-all duration-300 ${
-                      selectedSymptoms.has(index)
+                    <div className={`w-5 h-5 rounded-md border-2 shrink-0 mt-0.5 flex items-center justify-center transition-all duration-300 ${selectedSymptoms.has(index)
                         ? 'border-primary bg-primary'
                         : 'border-gray-300 bg-white'
-                    }`}>
+                      }`}>
                       {selectedSymptoms.has(index) && (
-                        <CheckCircle2 className="w-4 h-4 text-white" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-white" />
                       )}
                     </div>
-                    <span className={`text-base sm:text-lg leading-relaxed transition-colors ${
-                      selectedSymptoms.has(index) ? 'text-gray-900 font-semibold' : 'text-gray-600'
-                    }`}>
+                    <span className={`text-sm sm:text-base leading-relaxed transition-colors ${selectedSymptoms.has(index) ? 'text-gray-900 font-semibold' : 'text-gray-600'
+                      }`}>
                       {question}
                     </span>
                   </button>
@@ -566,38 +588,41 @@ function App() {
               {selectedSymptoms.size === 0 ? (
                 /* No symptoms selected - GREEN */
                 <div className="max-w-2xl w-full">
-                  <div className="w-24 h-24 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center text-white mx-auto mb-8 shadow-2xl shadow-emerald-400/40">
-                    <CircleCheck className="w-14 h-14" />
+                  <div className="w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center text-white mx-auto mb-5 sm:mb-8 shadow-2xl shadow-emerald-400/40">
+                    <CircleCheck className="w-10 h-10 sm:w-14 sm:h-14" />
                   </div>
-                  <h2 className="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+                  <h2 className="text-3xl sm:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 tracking-tight">
                     No Symptoms Detected
                   </h2>
-                  <div className="glass rounded-[2rem] p-8 sm:p-10 border-2 border-emerald-200 bg-emerald-50/50 shadow-xl shadow-emerald-100/50">
-                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-4">
+                  <div className="glass rounded-3xl sm:rounded-[2rem] p-6 sm:p-10 border-2 border-emerald-200 bg-emerald-50/50 shadow-xl shadow-emerald-100/50">
+                    <p className="text-base sm:text-xl text-gray-700 leading-relaxed mb-3 sm:mb-4">
                       Based on your responses, you did not select any warning signs. That's great news!
                     </p>
-                    <p className="text-base text-gray-600 leading-relaxed">
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                       Continue performing your monthly self-exams <strong className="text-emerald-600">7 to 10 days after your period starts</strong>. Staying consistent is key to early detection. Remember, this is not a substitute for regular professional screenings.
                     </p>
                   </div>
-                  <button
-                    onClick={() => {
-                      setSelectedSymptoms(new Set());
-                      setStep(0);
-                      setAnimKey(prev => prev + 1);
-                    }}
-                    className="mt-8 group inline-flex items-center px-8 py-4 rounded-full bg-emerald-500 text-white font-bold text-lg hover:bg-emerald-600 transition-all shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-1 focus:ring-4 focus:ring-emerald-200"
-                  >
-                    <RotateCw className="mr-3 w-5 h-5" />
-                    Start Over
-                  </button>
-                  <button
-                    onClick={generateAndShareSticker}
-                    className="mt-3 group inline-flex items-center px-8 py-4 rounded-full bg-gradient-to-r from-primary to-primary-light text-white font-bold text-lg hover:opacity-90 transition-all shadow-xl hover:shadow-primary/30 hover:-translate-y-1 focus:ring-4 focus:ring-primary/20"
-                  >
-                    <Share2 className="mr-3 w-5 h-5" />
-                    Share to Story
-                  </button>
+                  
+                  <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                    <button
+                      onClick={() => {
+                        setSelectedSymptoms(new Set());
+                        setStep(0);
+                        setAnimKey(prev => prev + 1);
+                      }}
+                      className="w-full sm:w-auto group inline-flex justify-center items-center px-8 py-3.5 sm:py-4 rounded-full bg-emerald-500 text-white font-bold text-base sm:text-lg hover:bg-emerald-600 transition-all shadow-xl hover:shadow-emerald-500/30 hover:-translate-y-1 focus:ring-4 focus:ring-emerald-200"
+                    >
+                      <RotateCw className="mr-2 sm:mr-3 w-5 h-5" />
+                      Start Over
+                    </button>
+                    <button
+                      onClick={generateAndShareSticker}
+                      className="w-full sm:w-auto group inline-flex justify-center items-center px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-primary to-primary-light text-white font-bold text-base sm:text-lg hover:opacity-90 transition-all shadow-xl hover:shadow-primary/30 hover:-translate-y-1 focus:ring-4 focus:ring-primary/20"
+                    >
+                      <Share2 className="mr-2 sm:mr-3 w-5 h-5" />
+                      Share to Story
+                    </button>
+                  </div>
                 </div>
               ) : (
                 /* Symptoms selected - YELLOW/AMBER */
@@ -626,24 +651,26 @@ function App() {
                       </p>
                     </div>
                   </div>
-                  <button
-                    onClick={() => {
-                      setSelectedSymptoms(new Set());
-                      setStep(0);
-                      setAnimKey(prev => prev + 1);
-                    }}
-                    className="mt-5 group inline-flex items-center px-7 py-3 rounded-full bg-amber-500 text-white font-bold text-base hover:bg-amber-600 transition-all shadow-xl hover:shadow-amber-500/30 hover:-translate-y-1 focus:ring-4 focus:ring-amber-200"
-                  >
-                    <RotateCw className="mr-2 w-5 h-5" />
-                    Start Over
-                  </button>
-                  <button
-                    onClick={generateAndShareSticker}
-                    className="mt-3 group inline-flex items-center px-7 py-3 rounded-full bg-gradient-to-r from-primary to-primary-light text-white font-bold text-base hover:opacity-90 transition-all shadow-xl hover:shadow-primary/30 hover:-translate-y-1 focus:ring-4 focus:ring-primary/20"
-                  >
-                    <Share2 className="mr-2 w-5 h-5" />
-                    Share to Story
-                  </button>
+                  <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                    <button
+                      onClick={() => {
+                        setSelectedSymptoms(new Set());
+                        setStep(0);
+                        setAnimKey(prev => prev + 1);
+                      }}
+                      className="w-full sm:w-auto group inline-flex justify-center items-center px-7 py-3.5 sm:py-3 rounded-full bg-amber-500 text-white font-bold text-base hover:bg-amber-600 transition-all shadow-xl hover:shadow-amber-500/30 hover:-translate-y-1 focus:ring-4 focus:ring-amber-200"
+                    >
+                      <RotateCw className="mr-2 w-5 h-5" />
+                      Start Over
+                    </button>
+                    <button
+                      onClick={generateAndShareSticker}
+                      className="w-full sm:w-auto group inline-flex justify-center items-center px-7 py-3.5 sm:py-3 rounded-full bg-gradient-to-r from-primary to-primary-light text-white font-bold text-base hover:opacity-90 transition-all shadow-xl hover:shadow-primary/30 hover:-translate-y-1 focus:ring-4 focus:ring-primary/20"
+                    >
+                      <Share2 className="mr-2 w-5 h-5" />
+                      Share to Story
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -674,17 +701,6 @@ function App() {
               >
                 {step === 4 ? 'See Results' : 'Continue'}
                 <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
-              </button>
-            )}
-            {step === totalSteps - 1 && (
-              <button
-                onClick={() => {
-                  setStep(0);
-                  setAnimKey(prev => prev + 1);
-                }}
-                className="pointer-events-auto group flex items-center px-8 py-4 rounded-full bg-white border-2 border-gray-200 text-gray-900 font-bold text-lg hover:border-gray-300 transition-all shadow-md hover:shadow-lg hover:-translate-y-1 focus:ring-4 focus:ring-gray-100"
-              >
-                Start Over
               </button>
             )}
           </div>

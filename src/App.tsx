@@ -627,26 +627,26 @@ function App() {
               ) : (
                 /* Symptoms selected - YELLOW/AMBER */
                 <div className="max-w-2xl w-full">
-                  <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white mx-auto mb-4 shadow-xl shadow-amber-400/30">
-                    <AlertTriangle className="w-9 h-9" />
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center text-white mx-auto mb-3 sm:mb-4 shadow-xl shadow-amber-400/30">
+                    <AlertTriangle className="w-7 h-7 sm:w-9 sm:h-9" />
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                  <h2 className="text-2xl sm:text-4xl font-extrabold text-gray-900 mb-2 sm:mb-3 tracking-tight">
                     Symptoms Detected
                   </h2>
-                  <p className="text-base sm:text-lg text-gray-700 leading-relaxed mb-4">
+                  <p className="text-sm sm:text-lg text-gray-700 leading-relaxed mb-3 sm:mb-4">
                     You selected <strong className="text-amber-600">{selectedSymptoms.size} symptom{selectedSymptoms.size > 1 ? 's' : ''}</strong> that may require professional attention.
                   </p>
-                  <div className="glass rounded-2xl p-5 sm:p-6 border-2 border-amber-200 bg-amber-50/50 shadow-lg shadow-amber-100/50">
-                    <div className="text-left space-y-1.5 mb-4">
+                  <div className="glass rounded-xl sm:rounded-2xl p-4 sm:p-6 border-2 border-amber-200 bg-amber-50/50 shadow-lg shadow-amber-100/50 flex flex-col">
+                    <div className="text-left space-y-1.5 mb-3 sm:mb-4 overflow-y-auto max-h-[25vh] sm:max-h-[30vh] pr-1 custom-scrollbar">
                       {Array.from(selectedSymptoms).map(index => (
                         <div key={index} className="flex items-start gap-2.5 bg-white/60 px-3 py-2 rounded-lg">
-                          <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2 shrink-0" />
-                          <span className="text-sm text-gray-700">{symptomQuestions[index]}</span>
+                          <div className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 shrink-0" />
+                          <span className="text-xs sm:text-sm text-gray-700 leading-snug">{symptomQuestions[index]}</span>
                         </div>
                       ))}
                     </div>
-                    <div className="bg-amber-100/80 rounded-lg p-4 border border-amber-200">
-                      <p className="text-sm sm:text-base text-amber-900 font-semibold leading-relaxed">
+                    <div className="bg-amber-100/80 rounded-lg p-3 sm:p-4 border border-amber-200 mt-auto shrink-0">
+                      <p className="text-xs sm:text-base text-amber-900 font-semibold leading-relaxed">
                         We strongly recommend consulting a healthcare professional for a proper clinical examination. Early detection is your strongest ally.
                       </p>
                     </div>

@@ -705,41 +705,41 @@ function App() {
                 
                 {/* Center Column: HTML Sticker Preview */}
                 <div className="w-full flex flex-col items-center justify-center">
-                  <div className="relative w-full max-w-sm bg-gradient-to-b from-[#FFF0F7] via-[#FFE0EF] to-[#FFD0E8] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-primary/10 flex flex-col items-center justify-center p-8">
+                  <div className="relative w-full max-w-[320px] bg-gradient-to-b from-[#FFF0F7] via-[#FFE0EF] to-[#FFD0E8] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-primary/10 flex flex-col items-center justify-center p-5 sm:p-6">
                      
                      {/* Decorative Elements */}
-                     <div className="absolute top-[-10%] left-[-20%] w-48 h-48 bg-primary/10 rounded-full blur-2xl"></div>
-                     <div className="absolute bottom-[-10%] right-[-20%] w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                     <div className="absolute top-[-10%] left-[-20%] w-40 h-40 bg-primary/10 rounded-full blur-2xl"></div>
+                     <div className="absolute bottom-[-10%] right-[-20%] w-56 h-56 bg-primary/10 rounded-full blur-3xl"></div>
 
                      {/* Main Card Area */}
-                     <div className="relative z-10 bg-white/85 backdrop-blur-sm border-2 border-primary/15 rounded-[2rem] p-6 sm:p-8 w-full flex flex-col items-center shadow-sm">
+                     <div className="relative z-10 bg-white/85 backdrop-blur-sm border-2 border-primary/15 rounded-[2rem] px-5 py-4 sm:px-7 sm:py-5 w-full flex flex-col items-center shadow-sm">
                        
                        {/* Heart Icon */}
-                       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#FF33A1] to-[#EB0080] flex items-center justify-center shadow-lg -mt-12 sm:-mt-14 mb-6 border-4 border-white">
-                         <Heart className="w-8 h-8 text-white fill-white" />
+                       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF33A1] to-[#EB0080] flex items-center justify-center shadow-lg -mt-8 sm:-mt-10 mb-4 border-[3px] border-white">
+                         <Heart className="w-6 h-6 text-white fill-white" />
                        </div>
 
-                       <p className="text-gray-500 font-medium text-lg sm:text-xl mb-1 text-center">I completed my</p>
+                       <p className="text-gray-500 font-medium text-sm sm:text-base mb-0.5 text-center">I completed my</p>
                        
                        {/* Title */}
-                       <div className="mb-1 text-center">
-                         <h3 className="text-5xl sm:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#EB0080] to-[#FF33A1] inline-block pb-1">SADARI</h3>
+                       <div className="mb-0 text-center">
+                         <h3 className="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#EB0080] to-[#FF33A1] inline-block pb-1">SADARI</h3>
                        </div>
                        
                        {/* Subtitle */}
-                       <p className="text-[#EB0080] font-bold text-lg sm:text-xl mb-6 text-center">Periksa Payudara Sendiri</p>
+                       <p className="text-[#EB0080] font-bold text-sm sm:text-base mb-4 text-center">Periksa Payudara Sendiri</p>
                        
                        {/* Divider */}
-                       <div className="w-full h-px bg-primary/20 mb-6"></div>
+                       <div className="w-full h-px bg-primary/20 mb-4"></div>
 
                        {/* Quote */}
-                       <div className="text-center space-y-1 mb-8">
-                         <p className="text-slate-700 italic font-medium text-base sm:text-lg">"Taking care of myself is</p>
-                         <p className="text-slate-700 italic font-medium text-base sm:text-lg">an act of self-love."</p>
+                       <div className="text-center space-y-0.5 mb-4">
+                         <p className="text-slate-700 italic font-medium text-xs sm:text-sm">"Taking care of myself is</p>
+                         <p className="text-slate-700 italic font-medium text-xs sm:text-sm">an act of self-love."</p>
                        </div>
 
                        {/* Date */}
-                       <p className="text-gray-400 font-medium text-sm sm:text-base text-center">
+                       <p className="text-gray-400 font-medium text-xs text-center">
                          {new Date().toLocaleDateString('en-US', {
                            year: 'numeric',
                            month: 'long',

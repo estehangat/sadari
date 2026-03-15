@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Heart, Activity, Shield, ArrowRight, ArrowLeft, Info, CheckCircle2, Instagram, Play, Pause, RotateCcw, Eye, MoveUp, Search, BedDouble, ShowerHead, AlertTriangle, CircleCheck, RotateCw, Share2 } from 'lucide-react';
+import { Heart, Activity, Shield, ArrowRight, ArrowLeft, Info, CheckCircle2, Instagram, Play, Pause, RotateCcw, Eye, MoveUp, Search, BedDouble, ShowerHead, AlertTriangle, CircleCheck, RotateCw, Share2, Download } from 'lucide-react';
 import QRCode from 'qrcode';
 
 function App() {
   const [step, setStep] = useState(0);
-  const totalSteps = 6;
+  const totalSteps = 7;
 
   // Symptom questionnaire state
   const [selectedSymptoms, setSelectedSymptoms] = useState<Set<number>>(new Set());
@@ -124,8 +124,10 @@ function App() {
 
   const progressPercentage = ((step + 1) / totalSteps) * 100;
 
-  // Generate sticker image and share/download
-  const generateAndShareSticker = async () => {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Generate sticker image returning max values
+  const generateStickerCanvas = async () => {
     const canvas = document.createElement('canvas');
     const W = 1080;
     const H = 1920;
@@ -268,26 +270,38 @@ function App() {
     ctx.font = '600 44px Inter, system-ui, sans-serif';
     ctx.fillText('@girlupunsoed.id', W / 2, 1720);
 
-    // Convert to blob and share/download
-    canvas.toBlob(async (blob) => {
+    return canvas;
+  };
+
+  // Generate sticker image and share/download
+  const processSticker = async (action: 'download' | 'share') => {
+    setIsGenerating(true);
+    try {
+      const canvas = await generateStickerCanvas();
+
+      // Convert to blob and share/download
+      const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
       if (!blob) return;
       const file = new File([blob], 'sadari-sticker.png', { type: 'image/png' });
 
-      // Try Web Share API (works on mobile)
-      if (navigator.share && navigator.canShare?.({ files: [file] })) {
-        try {
-          await navigator.share({
-            files: [file],
-            title: 'SADARI - Breast Cancer Awareness',
-            text: '#BreastCancerAwareness #SADARI',
-          });
-          return;
-        } catch {
-          // User cancelled or share failed, fall through to download
+      if (action === 'share') {
+        if (navigator.share && navigator.canShare?.({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'SADARI - Breast Cancer Awareness',
+              text: '#BreastCancerAwareness #SADARI',
+            });
+            return;
+          } catch {
+            // User cancelled or share failed, fallback to download
+          }
+        } else {
+          alert("Your browser doesn't support direct device sharing. The image will be downloaded instead.");
         }
       }
 
-      // Fallback: download the image
+      // Download
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -296,7 +310,9 @@ function App() {
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-    }, 'image/png');
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -616,11 +632,14 @@ function App() {
                       Start Over
                     </button>
                     <button
-                      onClick={generateAndShareSticker}
+                      onClick={() => {
+                        setStep(6);
+                        setAnimKey(prev => prev + 1);
+                      }}
                       className="w-full sm:w-auto group inline-flex justify-center items-center px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-primary to-primary-light text-white font-bold text-base sm:text-lg hover:opacity-90 transition-all shadow-xl hover:shadow-primary/30 hover:-translate-y-1 focus:ring-4 focus:ring-primary/20"
                     >
                       <Share2 className="mr-2 sm:mr-3 w-5 h-5" />
-                      Share to Story
+                      Spread Awareness
                     </button>
                   </div>
                 </div>
@@ -664,15 +683,118 @@ function App() {
                       Start Over
                     </button>
                     <button
-                      onClick={generateAndShareSticker}
+                      onClick={() => {
+                        setStep(6);
+                        setAnimKey(prev => prev + 1);
+                      }}
                       className="w-full sm:w-auto group inline-flex justify-center items-center px-7 py-3.5 sm:py-3 rounded-full bg-gradient-to-r from-primary to-primary-light text-white font-bold text-base hover:opacity-90 transition-all shadow-xl hover:shadow-primary/30 hover:-translate-y-1 focus:ring-4 focus:ring-primary/20"
                     >
                       <Share2 className="mr-2 w-5 h-5" />
-                      Share to Story
+                      Spread Awareness
                     </button>
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* STEP 6: SHARE/DOWNLOAD */}
+          {step === 6 && (
+            <div key={`step-6-${animKey}`} className="absolute inset-x-0 mx-auto w-full flex flex-col justify-center items-center text-center animate-slide-in-right px-4">
+              <div className="max-w-2xl w-full flex flex-col items-center justify-center gap-8">
+                
+                {/* Center Column: HTML Sticker Preview */}
+                <div className="w-full flex flex-col items-center justify-center">
+                  <div className="relative w-full max-w-sm bg-gradient-to-b from-[#FFF0F7] via-[#FFE0EF] to-[#FFD0E8] rounded-3xl overflow-hidden shadow-2xl ring-4 ring-primary/10 flex flex-col items-center justify-center p-8">
+                     
+                     {/* Decorative Elements */}
+                     <div className="absolute top-[-10%] left-[-20%] w-48 h-48 bg-primary/10 rounded-full blur-2xl"></div>
+                     <div className="absolute bottom-[-10%] right-[-20%] w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+
+                     {/* Main Card Area */}
+                     <div className="relative z-10 bg-white/85 backdrop-blur-sm border-2 border-primary/15 rounded-[2rem] p-6 sm:p-8 w-full flex flex-col items-center shadow-sm">
+                       
+                       {/* Heart Icon */}
+                       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#FF33A1] to-[#EB0080] flex items-center justify-center shadow-lg -mt-12 sm:-mt-14 mb-6 border-4 border-white">
+                         <Heart className="w-8 h-8 text-white fill-white" />
+                       </div>
+
+                       <p className="text-gray-500 font-medium text-lg sm:text-xl mb-1 text-center">I completed my</p>
+                       
+                       {/* Title */}
+                       <div className="mb-1 text-center">
+                         <h3 className="text-5xl sm:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#EB0080] to-[#FF33A1] inline-block pb-1">SADARI</h3>
+                       </div>
+                       
+                       {/* Subtitle */}
+                       <p className="text-[#EB0080] font-bold text-lg sm:text-xl mb-6 text-center">Periksa Payudara Sendiri</p>
+                       
+                       {/* Divider */}
+                       <div className="w-full h-px bg-primary/20 mb-6"></div>
+
+                       {/* Quote */}
+                       <div className="text-center space-y-1 mb-8">
+                         <p className="text-slate-700 italic font-medium text-base sm:text-lg">"Taking care of myself is</p>
+                         <p className="text-slate-700 italic font-medium text-base sm:text-lg">an act of self-love."</p>
+                       </div>
+
+                       {/* Date */}
+                       <p className="text-gray-400 font-medium text-sm sm:text-base text-center">
+                         {new Date().toLocaleDateString('en-US', {
+                           year: 'numeric',
+                           month: 'long',
+                           day: 'numeric',
+                         })}
+                       </p>
+                     </div>
+                  </div>
+                </div>
+
+                {/* Bottom Section: Actions */}
+                <div className="w-full flex flex-col items-center text-center">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">
+                    Spread Awareness
+                  </h2>
+                  <div className="glass rounded-2xl sm:rounded-3xl p-5 border-2 border-primary/10 bg-white/50 shadow-md mb-6 w-full max-w-xl">
+                    <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                      Your answers are <b>strictly private</b>. Download or share this sticker to remind your friends to do their monthly check too!
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-lg">
+                    <button
+                      onClick={() => processSticker('download')}
+                      disabled={isGenerating}
+                      className="w-full sm:w-auto group inline-flex justify-center items-center px-8 py-3.5 sm:py-4 rounded-full bg-white border-2 border-primary text-primary font-bold text-base sm:text-lg hover:bg-primary/5 transition-all shadow-md hover:shadow-lg focus:ring-4 focus:ring-primary/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      <Download className={`mr-2 sm:mr-3 w-5 h-5 ${isGenerating ? 'animate-bounce' : ''}`} />
+                      {isGenerating ? 'Generating...' : 'Download Sticker'}
+                    </button>
+                    <button
+                      onClick={() => processSticker('share')}
+                      disabled={isGenerating}
+                      className="w-full sm:w-auto group inline-flex justify-center items-center px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-primary to-primary-light text-white font-bold text-base sm:text-lg hover:opacity-90 transition-all shadow-xl hover:shadow-primary/30 hover:-translate-y-1 focus:ring-4 focus:ring-primary/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      <Share2 className={`mr-2 sm:mr-3 w-5 h-5 ${isGenerating ? 'animate-pulse' : ''}`} />
+                      {isGenerating ? 'Processing...' : 'Share Sticker'}
+                    </button>
+                  </div>
+
+                  <div className="mt-8">
+                    <button
+                      onClick={() => {
+                        setSelectedSymptoms(new Set());
+                        setStep(0);
+                        setAnimKey(prev => prev + 1);
+                      }}
+                      className="inline-flex items-center text-gray-500 hover:text-gray-800 font-semibold transition-colors"
+                    >
+                      <RotateCw className="w-4 h-4 mr-2" />
+                      Start Over from Beginning
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -694,7 +816,7 @@ function App() {
           </div>
 
           <div>
-            {step > 0 && step < totalSteps - 1 && (
+            {step > 0 && step < 5 && (
               <button
                 onClick={handleNext}
                 className="pointer-events-auto group flex items-center px-8 py-4 rounded-full bg-gray-900 text-white font-bold text-lg hover:bg-gray-800 transition-all shadow-xl hover:shadow-gray-900/30 hover:-translate-y-1 focus:ring-4 focus:ring-gray-300"
